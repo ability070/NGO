@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oguzie Onyeyirim Foundation | Empowering Communities</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Paystack Inline JS -->
+    <script src="https://js.paystack.co/v1/inline.js"></script>
+
+    <style>
+        /* =========================================
+           CSS VARIABLES & RESET
+        ========================================= */
+        :root {
+            --primary: #1a365d;      /* Deep Trust Blue */
+            --primary-light: #2c5282;
+            --accent: #ed8936;       /* Warm Gold/Orange */
+            --accent-dark: #dd6b20;
+            --text-dark: #2d3748;
+            --text-light: #718096;
+            --bg-light: #f7fafc;
+            --white: #ffffff;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --radius: 8px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-dark);
+            line-height: 1.6;
+            background: var(--white);
+        }
+        h1, h2, h3 { font-family: 'Playfair Display', serif; line-height: 1.2; }
+        a { text-decoration: none; color: inherit; }
+        img { max-width: 100%; display: block; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .section-padding { padding: 80px 0; }
+        .section-title { text-align: center; margin-bottom: 50px; }
+        .section-title h2 { font-size: 2.5rem; color: var(--primary); margin-bottom: 10px; }
+        .section-title p { color: var(--text-light); font-size: 1.1rem; max-width: 600px; margin: 0 auto; }
+        .btn {
+            display: inline-block; padding: 12px 28px; border-radius: 50px;
+            font-weight: 600; font-size: 1rem; cursor: pointer; transition: all 0.3s ease;
+            border: none; text-align: center;
+        }
+        .btn-primary { background: var(--accent); color: var(--white); }
+        .btn-primary:hover { background: var(--accent-dark); transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+        .btn-outline { background: transparent; color: var(--white); border: 2px solid var(--white); }
+        .btn-outline:hover { background: var(--white); color: var(--primary); }
+
+        /* =========================================
+           HEADER & NAVIGATION
+        ========================================= */
+        header {
+            position: fixed; top: 0; width: 100%; z-index: 1000;
+            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);
+            box-shadow: var(--shadow); transition: all 0.3s ease;
+        }
+        .nav-container { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; max-width: 1200px; margin: 0 auto; }
+        .logo { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--primary); }
+        .logo span { color: var(--accent); }
+        .nav-links { display: flex; gap: 30px; list-style: none; }
+        .nav-links a { font-weight: 500; color: var(--text-dark); transition: color 0.3s; }
+        .nav-links a:hover { color: var(--accent); }
+        .nav-donate-btn { background: var(--accent); color: white !important; padding: 8px 20px; border-radius: 50px; }
+        .nav-donate-btn:hover { background: var(--accent-dark); }
+        .hamburger { display: none; font-size: 1.5rem; cursor: pointer; color: var(--primary); }
+
+        /* =========================================
+           HERO SECTION
+        ========================================= */
+        .hero {
+            min-height: 100vh; display: flex; align-items: center;
+            background: linear-gradient(135deg, rgba(26, 54, 93, 0.9), rgba(44, 82, 130, 0.8)), 
+                        url('https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=1920&q=80') center/cover;
+            color: var(--white); text-align: center; padding-top: 80px;
+        }
+        .hero-content { max-width: 800px; margin: 0 auto; }
+        .hero-badge { display: inline-block; background: rgba(255,255,255,0.15); padding: 8px 16px; border-radius: 50px; font-size: 0.9rem; margin-bottom: 20px; backdrop-filter: blur(5px);}
+        .hero h1 { font-size: 3.5rem; margin-bottom: 20px; }
+        .hero p { font-size: 1.25rem; margin-bottom: 30px; opacity: 0.9; }
+        .hero-buttons { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
+
+        /* =========================================
+           ABOUT (MISSION & VISION)
+        ========================================= */
+        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+        .about-card {
+            background: var(--white); padding: 40px; border-radius: var(--radius);
+            box-shadow: var(--shadow); border-top: 4px solid var(--accent);
+        }
+        .about-card i { font-size: 2.5rem; color: var(--accent); margin-bottom: 20px; }
+        .about-card h3 { font-size: 1.8rem; color: var(--primary); margin-bottom: 15px; }
+
+        /* =========================================
+           PAST PROJECTS
+        ========================================= */
+        #projects { background: var(--bg-light); }
+        .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+        .project-card {
+            background: var(--white); border-radius: var(--radius); overflow: hidden;
+            box-shadow: var(--shadow); transition: transform 0.3s ease;
+        }
+        .project-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); }
+        .project-img { height: 200px; background-size: cover; background-position: center; }
+        .project-content { padding: 25px; }
+        .project-content h3 { font-size: 1.4rem; color: var(--primary); margin-bottom: 10px; font-family: 'Inter', sans-serif; font-weight: 700;}
+        .project-content p { color: var(--text-light); font-size: 0.95rem; }
+
+        /* =========================================
+           TESTIMONIALS
+        ========================================= */
+        .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .testimonial-card {
+            background: var(--white); padding: 30px; border-radius: var(--radius);
+            box-shadow: var(--shadow); position: relative; border: 1px solid #e2e8f0;
+        }
+        .testimonial-card::before {
+            content: '\201C'; position: absolute; top: 10px; left: 20px;
+            font-size: 4rem; color: var(--accent); opacity: 0.2; font-family: serif;
+        }
+        .stars { color: #f6e05e; margin-bottom: 15px; }
+        .testimonial-text { font-style: italic; color: var(--text-dark); margin-bottom: 20px; }
+        .testimonial-author { display: flex; align-items: center; gap: 15px; }
+        .author-avatar { width: 50px; height: 50px; border-radius: 50%; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.2rem;}
+        .author-info h4 { font-size: 1rem; font-family: 'Inter', sans-serif; color: var(--primary); }
+        .author-info p { font-size: 0.85rem; color: var(--text-light); }
+
+        /* =========================================
+           DONATION PORTAL
+        ========================================= */
+        #donate {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: var(--white);
+        }
+        #donate .section-title h2 { color: var(--white); }
+        #donate .section-title p { color: rgba(255,255,255,0.8); }
+        .donate-box {
+            max-width: 500px; margin: 0 auto; background: var(--white); color: var(--text-dark);
+            padding: 40px; border-radius: 12px; box-shadow: var(--shadow-lg);
+        }
+        .donate-box h3 { text-align: center; color: var(--primary); margin-bottom: 20px; font-family: 'Inter', sans-serif;}
+        .amount-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 20px; }
+        .amount-btn {
+            padding: 12px; border: 2px solid #e2e8f0; background: white; border-radius: var(--radius);
+            font-weight: 600; cursor: pointer; transition: all 0.2s; font-size: 1rem;
+        }
+        .amount-btn:hover, .amount-btn.active { border-color: var(--accent); background: #fffaf0; color: var(--accent-dark); }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 5px; font-weight: 500; font-size: 0.9rem; }
+        .form-group input {
+            width: 100%; padding: 12px; border: 1px solid #e2e8f0; border-radius: var(--radius);
+            font-size: 1rem; transition: border 0.3s;
+        }
+        .form-group input:focus { outline: none; border-color: var(--accent); }
+        .pay-btn {
+            width: 100%; padding: 15px; background: var(--accent); color: white; border: none;
+            font-size: 1.1rem; font-weight: 700; border-radius: 50px; cursor: pointer;
+            transition: all 0.3s; margin-top: 10px;
+        }
+        .pay-btn:hover { background: var(--accent-dark); transform: translateY(-2px); }
+        .trust-badges { text-align: center; margin-top: 20px; font-size: 0.85rem; color: var(--text-light); }
+        .trust-badges i { color: #48bb78; margin-right: 5px; }
+
+        /* =========================================
+           CONTACT & FOOTER
+        ========================================= */
+        .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; }
+        .contact-info h3 { font-size: 1.5rem; color: var(--primary); margin-bottom: 20px; font-family: 'Inter', sans-serif;}
+        .contact-item { display: flex; gap: 15px; margin-bottom: 20px; align-items: flex-start; }
+        .contact-item i { font-size: 1.2rem; color: var(--accent); margin-top: 4px; width: 20px; }
+        .contact-form input, .contact-form textarea {
+            width: 100%; padding: 12px; border: 1px solid #e2e8f0; border-radius: var(--radius);
+            margin-bottom: 15px; font-family: inherit; font-size: 1rem;
+        }
+        .contact-form textarea { height: 120px; resize: vertical; }
+        
+        footer {
+            background: #0f1f38; color: rgba(255,255,255,0.7); padding: 40px 0 20px; text-align: center;
+        }
+        .footer-logo { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: white; margin-bottom: 10px; }
+        .footer-logo span { color: var(--accent); }
+        .social-links { margin: 20px 0; display: flex; justify-content: center; gap: 20px; }
+        .social-links a { color: white; font-size: 1.2rem; transition: color 0.3s; }
+        .social-links a:hover { color: var(--accent); }
+        .copyright { font-size: 0.9rem; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; margin-top: 20px;}
+
+        /* =========================================
+           RESPONSIVE DESIGN
+        ========================================= */
+        @media (max-width: 768px) {
+            .hamburger { display: block; }
+            .nav-links {
+                position: absolute; top: 100%; left: 0; width: 100%; background: white;
+                flex-direction: column; padding: 20px; gap: 15px; box-shadow: var(--shadow);
+                display: none;
+            }
+            .nav-links.active { display: flex; }
+            .hero h1 { font-size: 2.5rem; }
+            .hero p { font-size: 1rem; }
+            .about-grid, .contact-grid { grid-template-columns: 1fr; }
+            .section-title h2 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- =========================================
+         HEADER & NAVIGATION
+    ========================================= -->
+    <header>
+        <div class="nav-container">
+            <a href="#home" class="logo">Oguzie <span>Onyeyirim</span></a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#testimonials">Reviews</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="#donate" class="nav-donate-btn">Donate</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- =========================================
+         HERO SECTION
+    ========================================= -->
+    <section class="hero" id="home">
+        <div class="container hero-content">
+            <div class="hero-badge"><i class="fas fa-shield-alt"></i> Registered NGO | RC: 8897035</div>
+            <h1>Empowering Communities. Transforming Lives.</h1>
+            <p>The Oguzie Onyeyirim Foundation is dedicated to uplifting the vulnerable, providing essential resources, and creating sustainable pathways out of poverty.</p>
+            <div class="hero-buttons">
+                <a href="#donate" class="btn btn-primary">Donate Now <i class="fas fa-heart" style="margin-left:8px;"></i></a>
+                <a href="#projects" class="btn btn-outline">See Our Impact</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================================
+         ABOUT (MISSION & VISION)
+    ========================================= -->
+    <section class="section-padding" id="about">
+        <div class="container">
+            <div class="section-title">
+                <h2>Who We Are</h2>
+                <p>Driven by compassion, guided by integrity, and committed to sustainable change.</p>
+            </div>
+            <div class="about-grid">
+                <div class="about-card">
+                    <i class="fas fa-eye"></i>
+                    <h3>Our Vision</h3>
+                    <p>To build a compassionate and equitable society where every individual has access to basic human needs, quality education, and the economic opportunities required to live a dignified and fulfilling life.</p>
+                </div>
+                <div class="about-card">
+                    <i class="fas fa-bullseye"></i>
+                    <h3>Our Mission</h3>
+                    <p>To empower underserved communities through sustainable interventions in education, healthcare, and economic empowerment, while maintaining absolute transparency, accountability, and love in all our endeavors.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================================
+         PAST PROJECTS
+    ========================================= -->
+    <section class="section-padding" id="projects">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Impact & Past Projects</h2>
+                <p>Real interventions creating real change in communities across the nation.</p>
+            </div>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <!-- Replace src with your actual project images -->
+                    <div class="project-img" style="background-image: url('https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=800&q=80');"></div>
+                    <div class="project-content">
+                        <h3>Lighting the Future</h3>
+                        <p>Provided school uniforms, textbooks, and paid tuition for 150 underprivileged children, keeping them in school and away from street hawking.</p>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-img" style="background-image: url('https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=800&q=80');"></div>
+                    <div class="project-content">
+                        <h3>Healing Hands Outreach</h3>
+                        <p>Organized a free medical and dental camp serving over 500 elderly and low-income individuals, providing free medications and screenings.</p>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-img" style="background-image: url('https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=800&q=80');"></div>
+                    <div class="project-content">
+                        <h3>Women of Resilience</h3>
+                        <p>Equipped 50 vulnerable women with sewing machines, culinary skills, and micro-grants to start small businesses and lift their families.</p>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-img" style="background-image: url('https://images.unsplash.com/photo-1541544741938-0af808871cc0?auto=format&fit=crop&w=800&q=80');"></div>
+                    <div class="project-content">
+                        <h3>Water is Life Project</h3>
+                        <p>Constructed a solar-powered borehole in a water-scarce community, providing clean drinking water to over 2,000 residents.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================================
+         TESTIMONIALS / REVIEWS
+    ========================================= -->
+    <section class="section-padding" id="testimonials" style="background: var(--bg-light);">
+        <div class="container">
+            <div class="section-title">
+                <h2>What People Say About Us</h2>
+                <p>Stories of hope from our beneficiaries and partners.</p>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">"Before the Foundation stepped in, I didn't know how I would feed my children. Their empowerment program gave me the tools to start my tailoring business. Today, my children are in school, and I have dignity again."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">CO</div>
+                        <div class="author-info">
+                            <h4>Mrs. Chioma O.</h4>
+                            <p>Beneficiary</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">"As a recurring donor, what keeps me giving is their transparency. They send detailed reports and pictures of the projects. I know exactly where my money is going, and I can see the direct impact."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">DA</div>
+                        <div class="author-info">
+                            <h4>Engr. David A.</h4>
+                            <p>Partner & Donor</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">"The foundation doesn't just write checks; they are on the ground. Their medical outreach in our local government area was the first of its kind we had seen in years. They are truly changing lives."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">EK</div>
+                        <div class="author-info">
+                            <h4>Hon. Emmanuel K.</h4>
+                            <p>Community Leader</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================================
+         SECURE DONATION PORTAL
+    ========================================= -->
+    <section class="section-padding" id="donate">
+        <div class="container">
+            <div class="section-title">
+                <h2>Be the Change</h2>
+                <p>100% of your donation goes directly to our projects. Your contribution is secure and encrypted.</p>
+            </div>
+            <div class="donate-box">
+                <h3>Make a Donation</h3>
+                <p style="text-align:center; color: var(--text-light); margin-bottom: 20px;">Select an amount (NGN):</p>
+                
+                <div class="amount-grid">
+                    <button class="amount-btn" onclick="selectAmount(5000, this)">₦5,000</button>
+                    <button class="amount-btn" onclick="selectAmount(10000, this)">₦10,000</button>
+                    <button class="amount-btn" onclick="selectAmount(20000, this)">₦20,000</button>
+                    <button class="amount-btn" onclick="selectAmount(50000, this)">₦50,000</button>
+                </div>
+
+                <div class="form-group">
+                    <label for="customAmount">Or enter a custom amount (₦)</label>
+                    <input type="number" id="customAmount" placeholder="e.g. 15000" oninput="clearActiveBtns()">
+                </div>
+                <div class="form-group">
+                    <label for="donorEmail">Your Email Address</label>
+                    <input type="email" id="donorEmail" placeholder="name@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="donorName">Your Name (Optional)</label>
+                    <input type="text" id="donorName" placeholder="John Doe">
+                </div>
+
+                <button class="pay-btn" onclick="payWithPaystack()">
+                    <i class="fas fa-lock" style="margin-right: 8px;"></i> Donate Securely
+                </button>
+                
+                <div class="trust-badges">
+                    <p><i class="fas fa-shield-alt"></i> Secured by Paystack | SSL Encrypted</p>
+                    <p style="margin-top:5px;"><i class="fas fa-certificate"></i> Registered NGO (RC: 8897035)</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================================
+         CONTACT US
+    ========================================= -->
+    <section class="section-padding" id="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>Get In Touch</h2>
+                <p>Have questions or want to partner with us? We'd love to hear from you.</p>
+            </div>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h3>Contact Information</h3>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <strong>Headquarters</strong><br>
+                            12 Hope Street, Lagos, Nigeria
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <strong>Phone / WhatsApp</strong><br>
+                            +234 800 000 0000
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <strong>Email</strong><br>
+                            info@oguzieonyeyirimfoundation.org
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <strong>Office Hours</strong><br>
+                            Mon - Fri: 9:00 AM - 5:00 PM
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <form onsubmit="handleContactForm(event)">
+                        <input type="text" placeholder="Your Name" required>
+                        <input type="email" placeholder="Your Email" required>
+                        <input type="text" placeholder="Subject">
+                        <textarea placeholder="Your Message..." required></textarea>
+                        <button type="submit" class="btn btn-primary" style="width:100%;">Send Message <i class="fas fa-paper-plane" style="margin-left:8px;"></i></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================================
+         FOOTER
+    ========================================= -->
+    <footer>
+        <div class="container">
+            <div class="footer-logo">Oguzie <span>Onyeyirim</span></div>
+            <p>Empowering Communities. Transforming Lives.</p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#"><i class="fab fa-whatsapp"></i></a>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2026 Oguzie Onyeyirim Foundation. All Rights Reserved. | RC: 8897035</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- =========================================
+         JAVASCRIPT
+    ========================================= -->
+    <script>
+        // Mobile Menu Toggle
+        function toggleMenu() {
+            document.getElementById('navLinks').classList.toggle('active');
+        }
+
+        // Close mobile menu when a link is clicked
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('navLinks').classList.remove('active');
+            });
+        });
+
+        // Donation Amount Selection
+        function selectAmount(amount, btn) {
+            document.getElementById('customAmount').value = amount;
+            // Remove active class from all buttons
+            document.querySelectorAll('.amount-btn').forEach(b => b.classList.remove('active'));
+            // Add active class to clicked button
+            btn.classList.add('active');
+        }
+
+        function clearActiveBtns() {
+            document.querySelectorAll('.amount-btn').forEach(b => b.classList.remove('active'));
+        }
+
+        // Paystack Integration
+        function payWithPaystack() {
+            let amount = document.getElementById('customAmount').value;
+            let email = document.getElementById('donorEmail').value;
+            let name = document.getElementById('donorName').value || "Anonymous Donor";
+
+            if (!amount || amount <= 0) {
+                alert("Please enter a valid donation amount.");
+                return;
+            }
+            if (!email || !email.includes('@')) {
+                alert("Please enter a valid email address.");
+                return;
+            }
+
+            // IMPORTANT: Replace 'pk_test_YOUR_PUBLIC_KEY_HERE' with your actual Paystack Public Key
+            var handler = PaystackPop.setup({
+                key: 'pk_test_YOUR_PUBLIC_KEY_HERE', 
+                email: email,
+                amount: amount * 100, // Amount is in kobo
+                currency: 'NGN',
+                ref: 'OGF-' + Date.now(), 
+                metadata: {
+                    custom_fields: [
+                        {
+                            display_name: "Donor Name",
+                            variable_name: "donor_name",
+                            value: name
+                        }
+                    ]
+                },
+                callback: function(response) {
+                    // Success!
+                    alert('Thank you for your generous donation, ' + name + '!\n\nReference: ' + response.reference + '\n\nYour support changes lives.');
+                    // Optional: Redirect to a thank you page
+                    // window.location.href = '/thank-you.html';
+                },
+                onClose: function() {
+                    // User closed the payment modal
+                }
+            });
+            handler.openIframe();
+        }
+
+        // Contact Form Handler (Frontend only)
+        function handleContactForm(e) {
+            e.preventDefault();
+            alert("Thank you for your message! We will get back to you within 24 hours.");
+            e.target.reset();
+        }
+    </script>
+
+</body>
+</html>
