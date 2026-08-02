@@ -9,8 +9,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Paystack Inline JS -->
-    <script src="https://js.paystack.co/v1/inline.js"></script>
 
     <style>
         /* =========================================
@@ -55,6 +53,18 @@
         .btn-primary:hover { background: var(--accent-dark); transform: translateY(-2px); box-shadow: var(--shadow-lg); }
         .btn-outline { background: transparent; color: var(--white); border: 2px solid var(--white); }
         .btn-outline:hover { background: var(--white); color: var(--primary); }
+        .btn-whatsapp { 
+            background: #25D366; 
+            color: var(--white); 
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .btn-whatsapp:hover { 
+            background: #128C7E; 
+            transform: translateY(-2px); 
+            box-shadow: var(--shadow-lg); 
+        }
 
         /* =========================================
            HEADER & NAVIGATION
@@ -80,7 +90,7 @@
         .hero {
             min-height: 100vh; display: flex; align-items: center;
             background: linear-gradient(135deg, rgba(26, 54, 93, 0.9), rgba(44, 82, 130, 0.8)), 
-                        url('images/ngo\ 3.jpeg') center/cover;
+                        url('images/ngo 3.jpeg') center/cover;
             color: var(--white); text-align: center; padding-top: 80px;
         }
         .hero-content { max-width: 800px; margin: 0 auto; }
@@ -113,7 +123,13 @@
         .project-img { height: 200px; background-size: cover; background-position: center; }
         .project-content { padding: 25px; }
         .project-content h3 { font-size: 1.4rem; color: var(--primary); margin-bottom: 10px; font-family: 'Inter', sans-serif; font-weight: 700;}
-        .project-content p { color: var(--text-light); font-size: 0.95rem; }
+        .project-content p { color: var(--text-light); font-size: 0.95rem; line-height: 1.6; }
+        
+        /* View More Button Container */
+        .view-more-container {
+            text-align: center;
+            margin-top: 50px;
+        }
 
         /* =========================================
            TESTIMONIALS
@@ -128,11 +144,11 @@
             font-size: 4rem; color: var(--accent); opacity: 0.2; font-family: serif;
         }
         .stars { color: #f6e05e; margin-bottom: 15px; }
-        .testimonial-text { font-style: italic; color: var(--text-dark); margin-bottom: 20px; }
-        .testimonial-author { display: flex; align-items: center; gap: 15px; }
-        .author-avatar { width: 50px; height: 50px; border-radius: 50%; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.2rem;}
-        .author-info h4 { font-size: 1rem; font-family: 'Inter', sans-serif; color: var(--primary); }
-        .author-info p { font-size: 0.85rem; color: var(--text-light); }
+        .testimonial-text { font-style: italic; color: var(--text-dark); margin-bottom: 20px; line-height: 1.7; }
+        .testimonial-author { display: flex; align-items: center; gap: 15px; margin-top: 20px; border-top: 1px solid #e2e8f0; padding-top: 20px; }
+        .author-avatar { width: 50px; height: 50px; border-radius: 50%; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.1rem; flex-shrink: 0;}
+        .author-info h4 { font-size: 1rem; font-family: 'Inter', sans-serif; color: var(--primary); font-weight: 700; margin-bottom: 2px; }
+        .author-info p { font-size: 0.85rem; color: var(--text-light); line-height: 1.4; }
 
         /* =========================================
            DONATION PORTAL
@@ -144,30 +160,50 @@
         #donate .section-title h2 { color: var(--white); }
         #donate .section-title p { color: rgba(255,255,255,0.8); }
         .donate-box {
-            max-width: 500px; margin: 0 auto; background: var(--white); color: var(--text-dark);
+            max-width: 550px; margin: 0 auto; background: var(--white); color: var(--text-dark);
             padding: 40px; border-radius: 12px; box-shadow: var(--shadow-lg);
         }
-        .donate-box h3 { text-align: center; color: var(--primary); margin-bottom: 20px; font-family: 'Inter', sans-serif;}
-        .amount-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 20px; }
-        .amount-btn {
-            padding: 12px; border: 2px solid #e2e8f0; background: white; border-radius: var(--radius);
-            font-weight: 600; cursor: pointer; transition: all 0.2s; font-size: 1rem;
+        .donate-box h3 { text-align: center; color: var(--primary); margin-bottom: 10px; font-family: 'Inter', sans-serif;}
+        
+        .bank-details {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: var(--radius);
+            padding: 25px;
+            margin: 25px 0;
         }
-        .amount-btn:hover, .amount-btn.active { border-color: var(--accent); background: #fffaf0; color: var(--accent-dark); }
-        .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; margin-bottom: 5px; font-weight: 500; font-size: 0.9rem; }
-        .form-group input {
-            width: 100%; padding: 12px; border: 1px solid #e2e8f0; border-radius: var(--radius);
-            font-size: 1rem; transition: border 0.3s;
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #e2e8f0;
         }
-        .form-group input:focus { outline: none; border-color: var(--accent); }
-        .pay-btn {
-            width: 100%; padding: 15px; background: var(--accent); color: white; border: none;
+        .detail-row:last-child { border-bottom: none; }
+        .detail-label { font-weight: 600; color: var(--text-light); font-size: 0.95rem; }
+        .detail-value { font-weight: 700; color: var(--primary); font-size: 1.1rem; letter-spacing: 0.5px; }
+        .copy-btn {
+            background: var(--primary); color: white; border: none; border-radius: 6px;
+            padding: 8px 12px; margin-left: 10px; cursor: pointer; transition: background 0.3s;
+            display: flex; align-items: center; gap: 6px; font-size: 0.85rem; font-weight: 600;
+        }
+        .copy-btn:hover { background: var(--primary-light); }
+        .copy-btn.copied { background: #48bb78; }
+
+        .transfer-note {
+            background: #fffaf0; padding: 15px; border-radius: 8px; 
+            border-left: 4px solid var(--accent); margin-top: 20px;
+        }
+        .transfer-note p { font-size: 0.9rem; color: var(--text-dark); margin: 0; }
+        
+        .whatsapp-btn {
+            width: 100%; padding: 15px; background: #25D366; color: white; border: none;
             font-size: 1.1rem; font-weight: 700; border-radius: 50px; cursor: pointer;
-            transition: all 0.3s; margin-top: 10px;
+            transition: all 0.3s; margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 10px;
         }
-        .pay-btn:hover { background: var(--accent-dark); transform: translateY(-2px); }
-        .trust-badges { text-align: center; margin-top: 20px; font-size: 0.85rem; color: var(--text-light); }
+        .whatsapp-btn:hover { background: #128C7E; transform: translateY(-2px); }
+
+        .trust-badges { text-align: center; margin-top: 25px; font-size: 0.85rem; color: var(--text-light); }
         .trust-badges i { color: #48bb78; margin-right: 5px; }
 
         /* =========================================
@@ -208,6 +244,8 @@
             .hero p { font-size: 1rem; }
             .about-grid, .contact-grid { grid-template-columns: 1fr; }
             .section-title h2 { font-size: 2rem; }
+            .detail-row { flex-direction: column; align-items: flex-start; gap: 8px; }
+            .copy-btn { margin-left: 0; margin-top: 5px; width: 100%; justify-content: center; }
         }
     </style>
 </head>
@@ -256,7 +294,21 @@
         <div class="container">
             <div class="section-title">
                 <h2>Who We Are</h2>
-                <p>Driven by compassion, guided by integrity, and committed to sustainable change.</p>
+                <p>OGUZIE ONYEYIRIM FOUNDATION) RC: 8897035)
+
+OUR MAIN FOCUS.
+
+Healthcare and Medical Outreach
+
+Education and Youth Development
+
+Community Empowerment
+
+Women and Child Welfare
+
+Humanitarian and Social Support
+
+Public Health Awareness and Disease Prevention</p>
             </div>
             <div class="about-grid">
                 <div class="about-card">
@@ -274,7 +326,7 @@
     </section>
 
     <!-- =========================================
-         PAST PROJECTS
+         PAST PROJECTS (UPDATED WITH DIVERSE, ENGAGING DESCRIPTIONS)
     ========================================= -->
     <section class="section-padding" id="projects">
         <div class="container">
@@ -284,75 +336,75 @@
             </div>
             <div class="projects-grid">
                 <div class="project-card">
-                    <!-- Replace src with your actual project images -->
-                    <div class="project-img" style="background-image: url('images/ng\ ph1.jpeg');"></div>
+                    <div class="project-img" style="background-image: url('images/ng ph1.jpeg');"></div>
                     <div class="project-content">
                         <h3>Lighting the Future</h3>
-                        <p>Provided school uniforms, textbooks, and paid tuition for 150 underprivileged children, keeping them in school and away from street hawking.</p>
+                        <p>Breaking the barriers to education by providing school uniforms, textbooks, and tuition support for underprivileged children, giving them a real chance at a brighter future.</p>
                     </div>
                 </div>
                 <div class="project-card">
-                    <div class="project-img" style="background-image: url('images/ng\ ph2.jpeg');"></div>
+                    <div class="project-img" style="background-image: url('images/ng ph2.jpeg');"></div>
                     <div class="project-content">
-                        <h3>Healing Hands Outreach</h3>
-                        <p>Organized a free medical and dental camp serving over 500 elderly and low-income individuals, providing free medications and screenings.</p>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-img" style="background-image: url('images/ng\ ph5.jpeg');"></div>
-                    <div class="project-content">
-                        <h3>Healing Hands Outreach</h3>
-                        <p>Organized a free medical and dental camp serving over 500 elderly and low-income individuals, providing free medications and screenings.</p>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-img" style="background-image: url('images/ng\ ph9.jpeg');"></div>
-                    <div class="project-content">
-                        <h3>Healing Hands Outreach</h3>
-                        <p>Organized a free medical and dental camp serving over 500 elderly and low-income individuals, providing free medications and screenings.</p>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-img" style="background-image: url('images/ng\ ph6.jpeg');"></div>
-                    <div class="project-content">
-                        <h3>Healing Hands Outreach</h3>
-                        <p>Organized a free medical and dental camp serving over 500 elderly and low-income individuals, providing free medications and screenings.</p>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-img" style="background-image: url('images/ng\ ph7.jpeg');"></div>
-                    <div class="project-content">
-                        <h3>Healing Hands Outreach</h3>
-                        <p>Organized a free medical and dental camp serving over 500 elderly and low-income individuals, providing free medications and screenings.</p>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-img" style="background-image: url('images/ng\ ph8.jpeg');"></div>
-                    <div class="project-content">
-                        <h3>Healing Hands Outreach</h3>
-                        <p>Organized a free medical and dental camp serving over 500 elderly and low-income individuals, providing free medications and screenings.</p>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-img" style="background-image: url('images/ng\ ph3.jpeg');"></div>
-                    <div class="project-content">
-                        <h3>Women of Resilience</h3>
-                        <p>Equipped 50 vulnerable women with sewing machines, culinary skills, and micro-grants to start small businesses and lift their families.</p>
+                        <h3>Healing Hands Medical Outreach</h3>
+                        <p>Taking healthcare to the grassroots. Our volunteer medical team provided free consultations, dental care, and essential medications to hundreds of elderly and low-income residents.</p>
                     </div>
                 </div>
                 <div class="project-card">
-                    <div class="project-img" style="background-image: url('images/ng\ ph4.jpeg');"></div>
+                    <div class="project-img" style="background-image: url('images/ng ph5.jpeg');"></div>
                     <div class="project-content">
-                        <h3>Water is Life Project</h3>
-                        <p>Constructed a solar-powered borehole in a water-scarce community, providing clean drinking water to over 2,000 residents.</p>
+                        <h3>Community Feeding & Relief</h3>
+                        <p>Ensuring no one goes to bed hungry. We distributed essential food items, groceries, and relief materials to vulnerable families and widows during periods of economic hardship.</p>
                     </div>
                 </div>
+                <div class="project-card">
+                    <div class="project-img" style="background-image: url('images/ng ph9.jpeg');"></div>
+                    <div class="project-content">
+                        <h3>Youth Skill Acquisition</h3>
+                        <p>Empowering the next generation. We hosted intensive vocational and digital skills training workshops, equipping young people with the tools they need to become self-reliant entrepreneurs.</p>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-img" style="background-image: url('images/ng ph6.jpeg');"></div>
+                    <div class="project-content">
+                        <h3>Maternal & Child Health</h3>
+                        <p>Caring for mothers and newborns. Our foundation provided prenatal care packages, baby essentials, and vital health education to expectant mothers in underserved communities.</p>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-img" style="background-image: url('images/ng ph7.jpeg');"></div>
+                    <div class="project-content">
+                        <h3>Environmental Sanitation Drive</h3>
+                        <p>Promoting a cleaner, healthier environment. We organized community-wide clean-up exercises and sensitization campaigns on proper waste disposal and public hygiene.</p>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-img" style="background-image: url('images/ng ph8.jpeg');"></div>
+                    <div class="project-content">
+                        <h3>Festive Joy & Orphanage Visits</h3>
+                        <p>Spreading smiles where they matter most. We visited local orphanages and care homes, sharing gifts, food, and quality time with children and the elderly during the festive season.</p>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-img" style="background-image: url('images/ng ph3.jpeg');"></div>
+                    <div class="project-content">
+                        <h3>Women of Resilience Project</h3>
+                        <p>Equipping vulnerable women with sewing machines, culinary training, and micro-grants to start small businesses, fostering financial independence and lifting families out of poverty.</p>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-img" style="background-image: url('images/ng ph4.jpeg');"></div>
+                    <div class="project-content">
+                        <h3>Water is Life Initiative</h3>
+                        <p>Constructing a solar-powered borehole in a water-scarce community, providing clean, safe drinking water to over 2,000 residents and drastically reducing waterborne diseases.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- View More Projects Button -->
+            <div class="view-more-container">
+                <a href="https://whatsapp.com/channel/0029VbDLuFMGufIuiSI0CY3r" target="_blank" class="btn btn-whatsapp">
+                    <i class="fab fa-whatsapp"></i> View More Projects on WhatsApp Channel
+                </a>
             </div>
         </div>
     </section>
@@ -364,48 +416,55 @@
         <div class="container">
             <div class="section-title">
                 <h2>What People Say About Us</h2>
-                <p>Stories of hope from our beneficiaries and partners.</p>
+                <p>Stories of hope and impact from our community leaders, beneficiaries, and partners.</p>
             </div>
             <div class="testimonials-grid">
+                
+                <!-- Review 1 -->
                 <div class="testimonial-card">
                     <div class="stars">
                         <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
                     </div>
-                    <p class="testimonial-text">"Before the Foundation stepped in, I didn't know how I would feed my children. Their empowerment program gave me the tools to start my tailoring business. Today, my children are in school, and I have dignity again."</p>
+                    <p class="testimonial-text">"On behalf of our community, I sincerely appreciate the OGUZIE ONYEYIRIM FOUNDATION for this impactful free medical outreach. Your compassion and commitment to improving the health of our people are truly commendable. May God continue to bless Dr. Oguzie Onyeyirim and the entire Foundation with greater strength and resources to keep touching lives and restoring hope. We look forward to welcoming you again."</p>
                     <div class="testimonial-author">
-                        <div class="author-avatar">CO</div>
+                        <div class="author-avatar">GO</div>
                         <div class="author-info">
-                            <h4>Mrs. Chioma O.</h4>
-                            <p>Beneficiary</p>
+                            <h4>Chief Godwin Onwuka</h4>
+                            <p>Traditional Ruler</p>
                         </div>
                     </div>
                 </div>
+
+                <!-- Review 2 -->
                 <div class="testimonial-card">
                     <div class="stars">
                         <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
                     </div>
-                    <p class="testimonial-text">"As a recurring donor, what keeps me giving is their transparency. They send detailed reports and pictures of the projects. I know exactly where my money is going, and I can see the direct impact."</p>
+                    <p class="testimonial-text">"I sincerely appreciate the OGUZIE ONYEYIRIM FOUNDATION for this free medical outreach. As a woman and a mother, having access to quality healthcare at no cost means so much to families like mine. The medical team was kind, professional, and treated everyone with dignity and respect. May God continue to bless Dr. Oguzie Onyeyirim and the entire Foundation for bringing hope and healing to our community."</p>
                     <div class="testimonial-author">
-                        <div class="author-avatar">DA</div>
+                        <div class="author-avatar">MN</div>
                         <div class="author-info">
-                            <h4>Engr. David A.</h4>
-                            <p>Partner & Donor</p>
+                            <h4>Mrs. Mary Nwankwo</h4>
+                            <p>Community Beneficiary</p>
                         </div>
                     </div>
                 </div>
+
+                <!-- Review 3 -->
                 <div class="testimonial-card">
                     <div class="stars">
                         <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
                     </div>
-                    <p class="testimonial-text">"The foundation doesn't just write checks; they are on the ground. Their medical outreach in our local government area was the first of its kind we had seen in years. They are truly changing lives."</p>
+                    <p class="testimonial-text">"I am proud to partner with and support the OGUZIE ONYEYIRIM FOUNDATION. Their commitment to improving lives through free medical outreaches, education, and community empowerment is inspiring. Every donation is used to create real, lasting impact. I encourage individuals and organizations to support this noble cause because together, we can restore hope and transform communities."</p>
                     <div class="testimonial-author">
-                        <div class="author-avatar">EK</div>
+                        <div class="author-avatar">SA</div>
                         <div class="author-info">
-                            <h4>Hon. Emmanuel K.</h4>
-                            <p>Community Leader</p>
+                            <h4>Engr. Sunny Hemebrim Amadi</h4>
+                            <p>MD/CEO, Sunnik Exploration & Production Co. Ltd. <br>(Partner & Donor)</p>
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </section>
@@ -417,38 +476,50 @@
         <div class="container">
             <div class="section-title">
                 <h2>Be the Change</h2>
-                <p>100% of your donation goes directly to our projects. Your contribution is secure and encrypted.</p>
+                <p>100% of your donation goes directly to our projects. Support us securely via direct bank transfer.</p>
             </div>
             <div class="donate-box">
-                <h3>Make a Donation</h3>
-                <p style="text-align:center; color: var(--text-light); margin-bottom: 20px;">Select an amount (NGN):</p>
+                <h3><i class="fas fa-university" style="color: var(--accent); margin-right: 10px;"></i> Direct Bank Transfer</h3>
+                <p style="text-align:center; color: var(--text-light); margin-bottom: 10px;">
+                    Make a secure transfer directly to our official NGO account.
+                </p>
                 
-                <div class="amount-grid">
-                    <button class="amount-btn" onclick="selectAmount(5000, this)">₦5,000</button>
-                    <button class="amount-btn" onclick="selectAmount(10000, this)">₦10,000</button>
-                    <button class="amount-btn" onclick="selectAmount(20000, this)">₦20,000</button>
-                    <button class="amount-btn" onclick="selectAmount(50000, this)">₦50,000</button>
+                <div class="bank-details">
+                    <div class="detail-row">
+                        <span class="detail-label">Bank Name:</span>
+                        <span class="detail-value" id="bankName">Globus Bank</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Account Name:</span>
+                        <span class="detail-value">Oguzie Onyeyirim Foundation</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Account Number:</span>
+                        <div style="display: flex; align-items: center;">
+                            <span class="detail-value" id="accountNumber">1000489769</span>
+                            <button class="copy-btn" onclick="copyToClipboard('accountNumber')" title="Copy Account Number">
+                                <i class="fas fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="customAmount">Or enter a custom amount (₦)</label>
-                    <input type="number" id="customAmount" placeholder="e.g. 15000" oninput="clearActiveBtns()">
-                </div>
-                <div class="form-group">
-                    <label for="donorEmail">Your Email Address</label>
-                    <input type="email" id="donorEmail" placeholder="name@example.com" required>
-                </div>
-                <div class="form-group">
-                    <label for="donorName">Your Name (Optional)</label>
-                    <input type="text" id="donorName" placeholder="John Doe">
+                <div class="transfer-note">
+                    <p>
+                        <i class="fas fa-info-circle" style="color: var(--accent); margin-right: 5px;"></i> 
+                        <strong>Note:</strong> Please use your name or "Donation" as the transfer narration/reference so we can track your generous gift.
+                    </p>
                 </div>
 
-                <button class="pay-btn" onclick="payWithPaystack()">
-                    <i class="fas fa-lock" style="margin-right: 8px;"></i> Donate Securely
-                </button>
+                <div style="margin-top: 25px; text-align: center;">
+                    <p style="margin-bottom: 15px; font-size: 0.95rem; color: var(--text-light);">Have you made a transfer? Let us know so we can send you a receipt!</p>
+                    <a href="https://wa.me/234707899360?text=Hello,%20I%20just%20made%20a%20donation%20to%20Oguzie%20Onyeyirim%20Foundation.%20Here%20is%20my%20proof%20of%20payment." target="_blank" class="whatsapp-btn">
+                        <i class="fab fa-whatsapp"></i> Send Proof of Payment via WhatsApp
+                    </a>
+                </div>
                 
                 <div class="trust-badges">
-                    <p><i class="fas fa-shield-alt"></i> Secured by Paystack | SSL Encrypted</p>
+                    <p><i class="fas fa-shield-alt"></i> Secure Direct Transfer | Official NGO Account</p>
                     <p style="margin-top:5px;"><i class="fas fa-certificate"></i> Registered NGO (RC: 8897035)</p>
                 </div>
             </div>
@@ -478,33 +549,24 @@
                         <i class="fas fa-phone"></i>
                         <div>
                             <strong>Phone / WhatsApp</strong><br>
-                            +2349013369170<br>
-                            +36707899360
+                            +234 901 336 9170<br>
+                            +234 707 899 360
                         </div>
                     </div>
                     <div class="contact-item">
                         <i class="fas fa-envelope"></i>
                         <div>
                             <strong>Email</strong><br>
-                             oguzieonyeyirimfoundation55@gmail.com
+                            oguzieonyeyirimfoundation55@gmail.com
                         </div>
                     </div>
                     <div class="contact-item">
                         <i class="fas fa-clock"></i>
                         <div>
                             <strong>Office Hours</strong><br>
-                            Mon - sun: 24/7
+                            Mon - Sun: 24/7
                         </div>
                     </div>
-                </div>
-                <div class="contact-form">
-                    <form onsubmit="handleContactForm(event)">
-                        <input type="text" placeholder="Your Name" required>
-                        <input type="email" placeholder="Your Email" required>
-                        <input type="text" placeholder="Subject">
-                        <textarea placeholder="Your Message..." required></textarea>
-                        <button type="submit" class="btn btn-primary" style="width:100%;">Send Message <i class="fas fa-paper-plane" style="margin-left:8px;"></i></button>
-                    </form>
                 </div>
             </div>
         </div>
@@ -518,11 +580,10 @@
             <div class="footer-logo">Oguzie <span>Onyeyirim</span></div>
             <p>Empowering Communities. Transforming Lives.</p>
             <div class="social-links">
-                <a href="https://www.facebook.com/share/19Fp1WzFWz/"><i class="fab fa-facebook-f"></i></a>
-                <a href="https://x.com/OguzieO33498"><i class="fab fa-twitter"></i></a>
-                <a href="https://www.instagram.com/oguzieonyeyirimfoundation55?igsh=MTh3aXBndnZpODJ2ZQ=="><i class="fab fa-instagram"></i></a>
-                <!-- <a href="#"><i class="fab fa-linkedin-in"></i></a> -->
-                <a href="w.me/+36707899360"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://www.facebook.com/share/19Fp1WzFWz/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://x.com/OguzieO33498" target="_blank"><i class="fab fa-twitter"></i></a>
+                <a href="https://www.instagram.com/oguzieonyeyirimfoundation55?igsh=MTh3aXBndnZpODJ2ZQ==" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://wa.me/234707899360" target="_blank"><i class="fab fa-whatsapp"></i></a>
             </div>
             <div class="copyright">
                 <p>&copy; 2026 Oguzie Onyeyirim Foundation. All Rights Reserved. | RC: 8897035</p>
@@ -546,68 +607,26 @@
             });
         });
 
-        // Donation Amount Selection
-        function selectAmount(amount, btn) {
-            document.getElementById('customAmount').value = amount;
-            // Remove active class from all buttons
-            document.querySelectorAll('.amount-btn').forEach(b => b.classList.remove('active'));
-            // Add active class to clicked button
-            btn.classList.add('active');
-        }
-
-        function clearActiveBtns() {
-            document.querySelectorAll('.amount-btn').forEach(b => b.classList.remove('active'));
-        }
-
-        // Paystack Integration
-        function payWithPaystack() {
-            let amount = document.getElementById('customAmount').value;
-            let email = document.getElementById('donorEmail').value;
-            let name = document.getElementById('donorName').value || "Anonymous Donor";
-
-            if (!amount || amount <= 0) {
-                alert("Please enter a valid donation amount.");
-                return;
-            }
-            if (!email || !email.includes('@')) {
-                alert("Please enter a valid email address.");
-                return;
-            }
-
-            // IMPORTANT: Replace 'pk_test_YOUR_PUBLIC_KEY_HERE' with your actual Paystack Public Key
-            var handler = PaystackPop.setup({
-                key: 'pk_test_YOUR_PUBLIC_KEY_HERE', 
-                email: email,
-                amount: amount * 100, // Amount is in kobo
-                currency: 'NGN',
-                ref: 'OGF-' + Date.now(), 
-                metadata: {
-                    custom_fields: [
-                        {
-                            display_name: "Donor Name",
-                            variable_name: "donor_name",
-                            value: name
-                        }
-                    ]
-                },
-                callback: function(response) {
-                    // Success!
-                    alert('Thank you for your generous donation, ' + name + '!\n\nReference: ' + response.reference + '\n\nYour support changes lives.');
-                    // Optional: Redirect to a thank you page
-                    // window.location.href = '/thank-you.html';
-                },
-                onClose: function() {
-                    // User closed the payment modal
-                }
+        // Copy to Clipboard Function
+        function copyToClipboard(elementId) {
+            const text = document.getElementById(elementId).innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                const btn = document.querySelector('.copy-btn');
+                const originalHTML = btn.innerHTML;
+                
+                // Visual feedback
+                btn.classList.add('copied');
+                btn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                
+                // Revert after 2 seconds
+                setTimeout(() => {
+                    btn.classList.remove('copied');
+                    btn.innerHTML = originalHTML;
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+                alert('Please manually copy the account number.');
             });
-            handler.openIframe();
-        }
-
-        // Contact Form Handler (Frontend only)
-        function handleContactForm(e) {
-            e.preventDefault();
-            alert("Thank you for your message! We will get back to you within 24 hours.");
-            e.target.reset();
         }
     </script>
 
